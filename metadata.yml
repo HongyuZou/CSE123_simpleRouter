@@ -1,0 +1,12 @@
+---
+:id: 38589342
+:submitters:
+- :name: Hongyu Zou
+  :email: hoz054@ucsd.edu
+:created_at: !ruby/object:ActiveSupport::TimeWithZone
+  utc: 2020-06-02 21:54:04.331233000 Z
+  zone: !ruby/object:ActiveSupport::TimeZone
+    name: America/Los_Angeles
+  time: 2020-06-02 14:54:04.331233000 Z
+:status: processed
+:score: 90.0

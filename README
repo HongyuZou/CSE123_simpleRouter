@@ -1,0 +1,31 @@
+I implemented this project following the logic of writeup:
+First I check if it is an ip packet or arp packet.
+
+If it is ip packet, I used 2 functions handleMyPacket() and
+handleOthersPacket() to deal with this case, since it is possible
+that this ip packet is an icmp message for the router, or it can be
+an icmp message from client to the server. In handleOthersPacket() I will
+send arp request and queue the packet in the arp_cache(It is only used as
+a storage buffer, not a real cache). 
+In handleMyPacket() I will directly send a ICMP reply message.
+
+If it is an arp packet, then it is possible that it is an arp reply or an
+arp requets. If it is an arp request, then the router just sends a arp reply
+telling the sender its MAC address. If it is an arp reply, I will send the
+ip packet waiting for this arp reply.
+
+If any net/host is unrechable, I will send corresponding ICMP message. If a host
+does not reply to an arp address for 5 arp requests send, it router will send ICMP11
+message.
+
+For project 4 I added following things:
+1. Check whether the packet is TCP/UDP. In handleMyPacket(), I will send icmp_unreachable message.
+But in handleOthersPacket(), I just route the packet to its destination.
+
+2. I also added arp cache support. When the router get a arp reqeust, it will add the ip->mac mapping to
+arp table. When the router get a arp response, it will add the ip_mac mapping to arp table and it will
+send the packet associated with this request.
+
+3. I also use longest prefix matching to find the interfaces to route the packet. Basically I first try
+to match the network portion of the interface with the network portion of the packet. If it is a match,
+and this mask is longer than previous matched mask length, then I update the longest match interface.
